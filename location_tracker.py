@@ -124,6 +124,8 @@ class LocationTracker:
     def __init__(self, db_name='locations.db'):
         self.db_name = db_name
         self.remote_database_url = None
+        self._tracker_recevier_ip = '192.168.0.10' # for testing purposes
+        self._tracker_recevier_port = 8080 # for testing purposes
         self.config_handler = ConfigHandler()  # Configuration handling
         self.create_database()  # Create SQLite database
 
@@ -167,8 +169,9 @@ class LocationTracker:
             ip_response.raise_for_status()  # Check if the request was successful
             current_ip = ip_response.text  # Extract the IP address from the response
             
-            # Construct the remote database URL using the public IP
-            self.remote_database_url = f'http://{current_ip}:80/v1/location' # for testing purposes
+            # Construct the remote database URL using the custom given IP
+            self._tracker_recevier_ip
+            self.remote_database_url = f'https://{self._tracker_recevier_ip}:{self._tracker_recevier_port}/v1/geotracker' # for testing purposes
             
             # Create a timestamp for the remote database
             remote_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
